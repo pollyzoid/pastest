@@ -5,6 +5,6 @@ get '/' do
 	"Hello, World!"
 end
 
-get '/hi' do
-  "Hi!"
+get '/accept' do
+	request.accept
 end
