@@ -10,18 +10,19 @@ set :haml, :format => :html5
 
 pastes = []
 
-get '/' do
+get '/', :provides => :html do
   haml :index
 end
 
-get '/pastes', :provides => :json do
-	request.accept.to_json
+get '/:id', :provides => :html do |id|
+  @id = id
+  haml :paste
 end
 
-get '/accept', :provides => :html do
-	"<strong>blah</strong>"
+post '/' do
+
 end
 
-get '/accept', :provides => :json do
-	"json"
+delete '/' do
+
 end

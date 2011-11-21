@@ -1,2 +1,2 @@
-require './restest'
+require './pastest'
 run Sinatra::Application
