@@ -1,4 +1,18 @@
-%title REST-est
+!!!
+%title pastest
 
-%p
-  Happy happy joy joy!
+%h1 pastest
+
+%h2
+  Recent pastes
+%ul
+  - @@pastes.reverse.take(5).each do |p|
+    %li
+      %a{:href => "./%d" % p.id}= p.id
+
+%h2
+  Create new paste
+
+%form{:action => "", :method => "post"}
+  %textarea{:name => "body"}
+  %input{:type => "submit", :class => "button", :value => "Paste"}
