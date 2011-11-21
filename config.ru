@@ -1,2 +1,2 @@
-require './hi'
+require './restest'
 run Sinatra::Application
