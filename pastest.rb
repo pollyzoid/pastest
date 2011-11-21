@@ -17,26 +17,26 @@ end
 set :haml, :format => :html5
 set :haml, :escape_html => true
 
-@@pastes = Array.new
+pastes = Array.new
 
 get '/', :provides => :html do
-  puts @@pastes.nil?
+  @pastes = pastes
   haml :index
 end
 
 get '/:id', :provides => :html do |id|
-  id = id.to_i
+  @id = id.to_i
 
-  halt 404, haml(:nopaste) if @@pastes[id-1].nil?
+  halt 404, haml(:nopaste) if pastes[@id-1].nil?
 
-  @paste = @@pastes[id-1]
+  @paste = pastes[@id-1]
 
   haml :paste
 end
 
 post '/', :provides => :html do
-  @@pastes << Paste.new(@@pastes.count + 1, params[:body])
-  redirect "/#{@@pastes.count}"
+  pastes << Paste.new(pastes.count + 1, params[:body])
+  redirect "/#{pastes.count}"
 end
 
 delete '/' do
