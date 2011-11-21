@@ -9,11 +9,6 @@ require 'pastest/paste'
 
 #DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
-helpers do
-  include Rack::Utils
-  alias_method :h, :escape_html
-end
-
 set :haml, :format => :html5
 set :haml, :escape_html => true
 
@@ -37,8 +32,4 @@ end
 post '/', :provides => :html do
   pastes << Paste.new(pastes.count + 1, params[:body])
   redirect "/#{pastes.count}"
-end
-
-delete '/' do
-
 end
