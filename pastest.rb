@@ -4,6 +4,7 @@ require 'haml'
 require 'data_mapper'
 
 DataMapper::Logger.new(STDOUT, :debug)
+DataMapper::Model.raise_on_save_failure = true
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
 $: << File.join(File.dirname(__FILE__), 'lib')
