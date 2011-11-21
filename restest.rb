@@ -6,6 +6,8 @@ require 'json'
 
 #DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
+set :haml, :format => :html5
+
 pastes = []
 
 get '/' do
