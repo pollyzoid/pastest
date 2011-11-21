@@ -3,6 +3,7 @@ require 'sinatra'
 require 'haml'
 require 'data_mapper'
 
+DataMapper::Logger.new(STDOUT, :debug)
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
 $: << File.join(File.dirname(__FILE__), 'lib')
@@ -14,7 +15,7 @@ set :haml, :format => :html5
 set :haml, :escape_html => true
 
 get '/', :provides => :html do
-  @recent = Paste.all(:limit => 5)
+  @recent = Paste.all(:limit => 5).reverse
   haml :index
 end
 
