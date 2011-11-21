@@ -4,11 +4,12 @@ require 'haml'
 require 'data_mapper'
 require 'json'
 
+DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
+
 $: << File.join(File.dirname(__FILE__), 'lib')
 require 'pastest/paste'
 
 DataMapper.finalize
-DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
 set :haml, :format => :html5
 set :haml, :escape_html => true
