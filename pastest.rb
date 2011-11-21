@@ -7,29 +7,29 @@ require 'json'
 $: << File.join(File.dirname(__FILE__), 'lib')
 require 'pastest/paste'
 
-#DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
+DataMapper.finalize
+DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
 set :haml, :format => :html5
 set :haml, :escape_html => true
 
-pastes = Array.new
-
 get '/', :provides => :html do
-  @pastes = pastes
+  @recent = Paste.all(:limit => 5)
   haml :index
 end
 
 get '/:id', :provides => :html do |id|
   @id = id.to_i
 
-  halt 404, haml(:nopaste) if pastes[@id-1].nil?
-
-  @paste = pastes[@id-1]
+  @paste = Paste.get(@id)
+  halt 404, haml(:nopaste) if @paste.nil?
 
   haml :paste
 end
 
 post '/', :provides => :html do
-  pastes << Paste.new(pastes.count + 1, params[:body])
-  redirect "/#{pastes.count}"
+  @paste = Paste.create(
+    :body => params[:body]
+  )
+  redirect "/#{@paste.id}"
 end

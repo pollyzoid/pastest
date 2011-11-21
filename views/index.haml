@@ -6,7 +6,7 @@
 %h2
   Recent pastes
 %ul
-  - @pastes.reverse.take(5).each do |p|
+  - @recent.each do |p|
     %li
       %a{:href => "./%d" % p.id}= p.id
 
