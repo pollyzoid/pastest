@@ -4,6 +4,7 @@ require 'haml'
 require 'dm-core'
 require 'dm-validations'
 require 'dm-timestamps'
+require 'dm-migrations'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
