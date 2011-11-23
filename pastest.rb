@@ -1,11 +1,11 @@
 require 'rubygems'
 require 'sinatra'
 require 'haml'
-require 'data_mapper'
+require 'dm-core'
 
-DataMapper::Logger.new(STDOUT, :debug)
+DataMapper::Logger.new($stdout, :debug)
 DataMapper::Model.raise_on_save_failure = true
-DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
+DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/postgres')
 
 $: << File.join(File.dirname(__FILE__), 'lib')
 require 'pastest/paste'
