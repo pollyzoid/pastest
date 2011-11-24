@@ -11,4 +11,7 @@
 %form{:action => "", :method => "post"}
   %textarea{:name => "paste[body]"}
   %input{:type => "checkbox", :name => "paste[private]", :value => "true"}
+  %select{:name => "paste[language]"}
+    - @languages.each do |k, v|
+      %option{:value => k}= v
   %input{:type => "submit", :value => "Paste"}

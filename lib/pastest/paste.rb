@@ -1,13 +1,15 @@
 require 'dm-core'
+require 'dm-types'
 
 class Paste
   include DataMapper::Resource
 
-  property :id,         String, :key => true, :default => lambda { |r, p| SecureRandom.urlsafe_base64 }
+  property :id,         String,   :key => true, :default => lambda { |r, p| SecureRandom.urlsafe_base64 }
   property :created_at, DateTime
   property :updated_at, DateTime
-  property :private,    Boolean,:default => false
-  property :body,       Text,   :required => true
+  property :private,    Boolean,  :default => false
+  property :body,       Text,     :required => true
+  property :language,   Enum[*LANGUAGES], :default => :plain
 
   def self.public
     all(:private => false)

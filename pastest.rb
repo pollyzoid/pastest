@@ -18,6 +18,52 @@ configure do
   enable :method_override # enable support for _method in forms, for PUT and DELETE methods
 end
 
+LANGUAGES = {
+  :plain      => "Plain text",
+  :apache     => "Apache",
+  :assembler  => "Assembler",
+  :avr        => "AVR",
+  :axapta     => "Axapta",
+  :bash       => "Bash",
+  :c          => "C",
+  :cs         => "C#",
+  :cpp        => "C++",
+  :cmake      => "CMake",
+  :css        => "CSS",
+  :delphi     => "Delphi",
+  :diff       => "Diff",
+  :django     => "Django",
+  :dos        => "DOS batch file",
+  :erlang     => "Erlang",
+  :go         => "Go",
+  :haskell    => "Haskell",
+  :html       => "HTML",
+  :ini        => "Ini",
+  :java       => "Java",
+  :javascript => "Javascript",
+  :lisp       => "Lisp",
+  :lua        => "Lua",
+  :mel        => "MEL",
+  :nginx      => "Nginx",
+  :objective  => "Objective",
+  :parser3    => "Parser3",
+  :perl       => "Perl",
+  :php        => "PHP",
+  :profile    => "profile",
+  :python     => "Python",
+  :renderman  => "RenderMan",
+  :repl       => "REPL",
+  :ruby       => "Ruby",
+  :scala      => "Scala",
+  :smalltalk  => "Smalltalk",
+  :sql        => "SQL",
+  :tex        => "TeX",
+  :vala       => "Vala",
+  :vbscript   => "VBScript",
+  :vhdl       => "VHDL",
+  :xml        => "XML"
+}
+
 require 'pastest/dm-session'
 require 'pastest/paste'
 DataMapper.finalize
@@ -37,6 +83,7 @@ before do
 end
 
 get '/', :provides => :html do
+  @languages = LANGUAGES
   @recent = Paste.public.sorted.recent 20
   haml :index
 end
