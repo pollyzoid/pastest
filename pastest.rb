@@ -16,6 +16,7 @@ configure do
 end
 
 require 'pastest/paste'
+DataMapper.finalize
 
 helpers do
   def title(str='')
@@ -42,7 +43,7 @@ get '/:id', :provides => :html do |id|
 end
 
 post '/', :provides => :html do
-  @paste = Paste.new(params[:paste])
+  @paste = Paste.new params[:paste]
   if @paste.save
     redirect "/#{@paste.id}"
   else
