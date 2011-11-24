@@ -1,6 +1,9 @@
 %h1 pastest
 
-%h2 Recent pastes
+%h2
+  Recent pastes
+  %small (#{@num_recent}/#{@num_total}, #{@num_private} private)
+
 %ul
   - @recent.each do |p|
     %li

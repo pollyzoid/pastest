@@ -2,6 +2,7 @@ require 'rubygems'
 require 'sinatra'
 require 'haml'
 require 'dm-core'
+require 'dm-aggregates'
 require 'dm-timestamps'
 require 'securerandom'
 
@@ -82,8 +83,15 @@ before do
 end
 
 get '/', :provides => :html do
-  @languages = LANGUAGES
   @recent = Paste.public.sorted.recent 20
+
+  # some stats
+  @num_total = Paste.count
+  @num_private = Paste.count(:private => true)
+  @num_recent = @recent.length
+
+  @languages = LANGUAGES
+  
   haml :index
 end
 
