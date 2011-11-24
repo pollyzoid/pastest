@@ -20,12 +20,11 @@ end
 
 LANGUAGES = {
   :plain      => "Plain text",
+  '1c'        => "1C",
   :apache     => "Apache",
-  :assembler  => "Assembler",
   :avrasm     => "AVR Assembler",
   :axapta     => "Axapta",
   :bash       => "Bash",
-  :c          => "C",
   :cs         => "C#",
   :cpp        => "C++",
   :cmake      => "CMake",
@@ -33,12 +32,11 @@ LANGUAGES = {
   :delphi     => "Delphi",
   :diff       => "Diff",
   :django     => "Django",
-  :dos        => "DOS batch file",
+  :dos        => "DOS .bat",
   :erlang     => "Erlang",
   :erlang_repl=> "Erlang REPL",
   :go         => "Go",
   :haskell    => "Haskell",
-  :html       => "HTML",
   :ini        => "Ini",
   :java       => "Java",
   :javascript => "Javascript",
@@ -46,12 +44,14 @@ LANGUAGES = {
   :lua        => "Lua",
   :mel        => "MEL",
   :nginx      => "Nginx",
-  :objective  => "Objective",
+  :objectivec => "Objective C",
   :parser3    => "Parser3",
   :perl       => "Perl",
   :php        => "PHP",
-  :profile    => "Python profiler",
   :python     => "Python",
+  :profile    => "Python profiler",
+  :rsl        => "RenderMan RSL",
+  :rib        => "RenderMan RIB",
   :ruby       => "Ruby",
   :scala      => "Scala",
   :smalltalk  => "Smalltalk",
@@ -60,7 +60,7 @@ LANGUAGES = {
   :vala       => "Vala",
   :vbscript   => "VBScript",
   :vhdl       => "VHDL",
-  :xml        => "XML"
+  :xml        => "XML, HTML"
 }
 
 require 'pastest/dm-session'
