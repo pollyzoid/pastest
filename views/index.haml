@@ -3,15 +3,13 @@
 
 %h1 pastest
 
-%h2
-  Recent pastes
+%h2 Recent pastes
 %ul
   - @recent.each do |p|
     %li
-      %a{:href => "./%d" % p.id}= p.id
+      %a{:href => "./%s" % p.id}= p.id
 
-%h2
-  Create new paste
+%h2 Create new paste
 
 %form{:action => "", :method => "post"}
   %textarea{:name => "body"}
