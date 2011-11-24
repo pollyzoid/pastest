@@ -3,7 +3,6 @@ require 'sinatra'
 require 'haml'
 require 'dm-core'
 require 'dm-timestamps'
-require 'dm-migrations'
 require 'securerandom'
 
 $: << File.join(File.dirname(__FILE__), 'lib')
