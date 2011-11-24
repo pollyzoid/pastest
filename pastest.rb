@@ -9,13 +9,19 @@ configure do
   $: << File.join(File.dirname(__FILE__), 'lib')
 
   DataMapper::Logger.new($stdout, :debug)
-  DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/postgres')
+  DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://postgres:nope@localhost/postgres')
 
   set :haml, :format => :html5
   set :haml, :escape_html => true
 end
 
 require 'pastest/paste'
+
+helpers do
+  def title(str='')
+    @title = str.empty? ? "pastest" : "pastest - #{str}"
+  end
+end
 
 get '/', :provides => :html do
   @recent = Paste.public.sorted.recent 20
@@ -24,10 +30,14 @@ end
 
 get '/:id', :provides => :html do |id|
   @id = id
-
   @paste = Paste.get(@id)
-  halt 404, haml(:nopaste) if @paste.nil?
 
+  if @paste.nil?
+    title '404'
+    halt 404, haml(:nopaste)
+  end
+
+  title @id
   haml :paste
 end
 
