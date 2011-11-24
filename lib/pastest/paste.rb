@@ -1,6 +1,12 @@
 require 'dm-core'
 require 'dm-types'
 
+# bleh
+LANG_ENUM = []
+LANGUAGES.each do |k, v|
+  LANG_ENUM << k
+end
+
 class Paste
   include DataMapper::Resource
 
@@ -9,7 +15,7 @@ class Paste
   property :updated_at, DateTime
   property :private,    Boolean,  :default => false
   property :body,       Text,     :required => true
-  property :language,   Enum[*LANGUAGES], :default => :plain
+  property :language,   Enum[*LANG_ENUM], :default => :lua
 
   def self.public
     all(:private => false)
