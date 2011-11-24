@@ -1,10 +1,10 @@
-%h3= "Paste #{@paste.id}"
+%h3 Paste #{@paste.id}
 %h3
-  %small= "Language: #{@paste.language}"
+  %small Language: #{@paste.language}
 
 - lang_class = @paste.language == :plain ? "no-highlight" : @paste.language
 %pre
   %code{:class => lang_class}= @paste.body
 
 - if @is_owner
-  %p owner!
+  You own this paste.
