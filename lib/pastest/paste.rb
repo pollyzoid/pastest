@@ -1,3 +1,5 @@
+require 'dm-core'
+
 class Paste
   include DataMapper::Resource
 
@@ -15,7 +17,7 @@ class Paste
     all(:order => [ :created_at.desc ])
   end
 
-  def self.recent( n )
+  def self.recent n 
     all(:limit => n)
   end
 end

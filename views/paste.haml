@@ -2,3 +2,6 @@
 
 %pre
   = @paste.body
+
+- if @is_owner
+  %p owner!

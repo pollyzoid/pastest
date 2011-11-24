@@ -4,7 +4,7 @@
 %ul
   - @recent.each do |p|
     %li
-      %a{:href => "./%s" % p.id}= p.id
+      %a{:href => to("/#{p.id}")}= p.id
 
 %h2 Create new paste
 

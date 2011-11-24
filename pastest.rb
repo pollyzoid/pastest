@@ -13,15 +13,27 @@ configure do
 
   set :haml, :format => :html5
   set :haml, :escape_html => true
+
+  disable :sessions
+  enable :method_override # enable support for _method in forms, for PUT and DELETE methods
 end
 
+require 'pastest/dm-session'
 require 'pastest/paste'
 DataMapper.finalize
 
+use Rack::Session::DataMapper
+
 helpers do
-  def title(str='')
-    @title = str.empty? ? "pastest" : "pastest - #{str}"
+  def title str=''
+    @title = "pastest - #{str}" unless str.empty?
   end
+end
+
+before do
+  session[:pastes] ||= []
+
+  @title = "pastest"
 end
 
 get '/', :provides => :html do
@@ -38,6 +50,7 @@ get '/:id', :provides => :html do |id|
     halt 404, haml(:nopaste)
   end
 
+  @is_owner = session[:pastes].include? @paste.id
   title @id
   haml :paste
 end
@@ -45,8 +58,9 @@ end
 post '/', :provides => :html do
   @paste = Paste.new params[:paste]
   if @paste.save
-    redirect "/#{@paste.id}"
+    session[:pastes] << @paste.id
+    redirect to("/#{@paste.id}")
   else
-    redirect "/"
-  end  
+    redirect to('/')
+  end
 end
