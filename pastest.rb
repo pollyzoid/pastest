@@ -5,18 +5,17 @@ require 'dm-core'
 require 'dm-timestamps'
 require 'securerandom'
 
-$: << File.join(File.dirname(__FILE__), 'lib')
+configure do
+  $: << File.join(File.dirname(__FILE__), 'lib')
 
-DataMapper::Logger.new($stdout, :debug)
-DataMapper::Model.raise_on_save_failure = true
-DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/postgres')
+  DataMapper::Logger.new($stdout, :debug)
+  DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/postgres')
+
+  set :haml, :format => :html5
+  set :haml, :escape_html => true
+end
 
 require 'pastest/paste'
-
-DataMapper.finalize
-
-set :haml, :format => :html5
-set :haml, :escape_html => true
 
 get '/', :provides => :html do
   @recent = Paste.public.sorted.recent 20
@@ -33,8 +32,10 @@ get '/:id', :provides => :html do |id|
 end
 
 post '/', :provides => :html do
-  @paste = Paste.create(
-    :body => params[:body]
-  )
-  redirect "/#{@paste.id}"
+  @paste = Paste.new params[:paste]
+  if @paste.save
+    redirect "/#{@paste.id}"
+  else
+    redirect "/"
+  end  
 end

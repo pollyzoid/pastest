@@ -1,6 +1,3 @@
-!!!
-%title pastest
-
 %h1 pastest
 
 %h2 Recent pastes
@@ -12,5 +9,6 @@
 %h2 Create new paste
 
 %form{:action => "", :method => "post"}
-  %textarea{:name => "body"}
-  %input{:type => "submit", :class => "button", :value => "Paste"}
+  %textarea{:name => "room[body]"}
+  %input{:type => "checkbox", :name => "room[private]", :value => "true"}
+  %input{:type => "submit", :value => "Paste"}
