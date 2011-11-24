@@ -1,5 +1,11 @@
 !!!
 %title= @title
 
+%link{:rel => 'stylesheet', :href => url('highlight/styles/default.css')}
+
+%script{:src => url('/highlight/highlight.js')}
+:javascript
+  hljs.initHighlightingOnLoad();
+
 #content
   != yield
