@@ -1,3 +1,4 @@
 *.sublime-workspace
 .bundle
 Gemfile.lock
+.sass-cache

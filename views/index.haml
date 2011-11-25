@@ -1,20 +1,25 @@
-%h1 pastest
+%form{:action => to('/pastes'), :method => :post}
 
-%h2
-  Recent pastes
-  %small (#{@num_recent}/#{@num_total}, #{@num_private} private)
+  #sidebar
+    %h3.title Options
+    %table#options
+      %tbody
+        %tr
+          %td Language:
+          %td
+            %select{:name => "paste[language]"}
+              - @languages.each do |k, v|
+                %option{:value => k}= v
+        %tr
+          %td Title:
+          %td
+            %input{:type => "text", :name => "paste[title]", :maxlength => 32}
+    .submit
+      %span
+        %img.icon{:src => url('/icons/lock.png')}
+        %input{:type => "checkbox", :name => "paste[private]", :value => "true"}
+      %input#stupidbutan{:type => "submit",   :value => "Paste"}
 
-%ul
-  - @recent.each do |p|
-    %li
-      %a{:href => to("/#{p.id}")}= p.id
-
-%h2 Create new paste
-
-%form{:action => "", :method => "post"}
-  %textarea{:name => "paste[body]"}
-  %input{:type => "checkbox", :name => "paste[private]", :value => "true"}
-  %select{:name => "paste[language]"}
-    - @languages.each do |k, v|
-      %option{:value => k}= v
-  %input{:type => "submit", :value => "Paste"}
+  #editor
+    %h3.title Create new paste
+    %textarea{:name => "paste[body]"}

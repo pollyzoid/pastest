@@ -1,11 +1,13 @@
 !!!
 %title= @title
 
-%link{:rel => 'stylesheet', :href => url('highlight/styles/default.css')}
+%link{:rel => 'stylesheet', :href => versioned_sass('stylesheet')}
 
-%script{:src => url('/highlight/highlight.pack.js')}
+%script{:src => versioned_js('highlight.pack')}
 :javascript
   hljs.initHighlightingOnLoad();
+
+%h1 pastest
 
 #content
   != yield

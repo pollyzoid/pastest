@@ -15,7 +15,17 @@ class Paste
   property :updated_at, DateTime
   property :private,    Boolean,  :default => false
   property :body,       Text,     :required => true
-  property :language,   Enum[*LANG_ENUM], :default => :lua
+  property :language,   Enum[*LANG_ENUM], :default => :plain
+  property :title,      String,   :length => 32, :default => "Untitled"
+
+  def title= new_title
+    puts "New title: #{new_title}"
+    if new_title.empty?
+      super "Untitled"
+    else
+      super
+    end
+  end
 
   def self.public
     all(:private => false)

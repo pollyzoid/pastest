@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'haml'
+require 'sass'
 require 'dm-core'
 require 'dm-aggregates'
 require 'dm-timestamps'
@@ -21,7 +22,7 @@ end
 
 LANGUAGES = {
   :plain      => "Plain text",
-  '1c'        => "1C",
+  :'1c'       => "1C",
   :apache     => "Apache",
   :avrasm     => "AVR Assembler",
   :axapta     => "Axapta",
@@ -74,6 +75,12 @@ helpers do
   def title str=''
     @title = "pastest - #{str}" unless str.empty?
   end
+  def versioned_sass ss
+    url "/styles/#{ss}.css?" + File.mtime(File.join(settings.views, "styles", "#{ss}.sass")).to_i.to_s
+  end
+  def versioned_js js
+    url "/scripts/#{js}.js?" + File.mtime(File.join(settings.public_folder, "scripts", "#{js}.js")).to_i.to_s
+  end
 end
 
 before do
@@ -82,20 +89,30 @@ before do
   @title = "pastest"
 end
 
+get '/styles/stylesheet.css' do
+  content_type 'text/css'
+  response['Expires'] = (Time.now + 60*30).httpdate
+  sass :"styles/stylesheet"
+end
+
 get '/', :provides => :html do
-  @recent = Paste.public.sorted.recent 20
+  @languages = LANGUAGES
+  
+  haml :index
+end
+
+get '/pastes', :provides => :html do
+  @recent = Paste.public.sorted.recent 200
 
   # some stats
   @num_total = Paste.count
   @num_private = Paste.count(:private => true)
   @num_recent = @recent.length
 
-  @languages = LANGUAGES
-  
-  haml :index
+  haml :pastes
 end
 
-get '/:id', :provides => :html do |id|
+get '/pastes/:id', :provides => :html do |id|
   @id = id
   @paste = Paste.get(@id)
 
@@ -109,11 +126,16 @@ get '/:id', :provides => :html do |id|
   haml :paste
 end
 
-post '/', :provides => :html do
+post '/pastes', :provides => :html do
+  # welp
+  unless LANGUAGES.key? :"#{params[:paste][:language]}" # what the fuck
+    redirect to('/')
+  end
+
   @paste = Paste.new params[:paste]
   if @paste.save
     session[:pastes] << @paste.id
-    redirect to("/#{@paste.id}")
+    redirect to("/pastes/#{@paste.id}")
   else
     redirect to('/')
   end

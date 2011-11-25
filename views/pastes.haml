@@ -1,0 +1,8 @@
+%h2
+  Recent pastes
+  %small (#{@num_recent}/#{@num_total}, #{@num_private} private)
+
+%ul
+- @recent.each do |p|
+  %li
+    %a{:href => to("/pastes/#{p.id}")} Paste: #{p.title}
