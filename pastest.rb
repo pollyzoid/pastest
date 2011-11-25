@@ -78,6 +78,9 @@ helpers do
   def versioned_sass ss
     url "/styles/#{ss}.css?" + File.mtime(File.join(settings.views, "styles", "#{ss}.sass")).to_i.to_s
   end
+  def versioned_css css
+    url "/styles/#{css}.css?" + File.mtime(File.join(settings.public_folder, "styles", "#{css}.css")).to_i.to_s
+  end
   def versioned_js js
     url "/scripts/#{js}.js?" + File.mtime(File.join(settings.public_folder, "scripts", "#{js}.js")).to_i.to_s
   end
