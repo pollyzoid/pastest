@@ -7,7 +7,11 @@
 :javascript
   hljs.initHighlightingOnLoad();
 
-%h1 pastest
+%a{:href => to('/')}
+  %strong home
+%br
+%a{:href => to('/pastes')}
+  %strong recent
 
 #content
   != yield
